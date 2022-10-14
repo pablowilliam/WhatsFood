@@ -1,0 +1,509 @@
+{
+  "description": "Barry the Barista-Bot",
+  "states": [
+    {
+      "name": "Trigger",
+      "type": "InitialState",
+      "properties": {
+        "offset": {
+          "x": 30,
+          "y": -340
+        },
+        "flow_url": "https://webhooks.twilio.com/v1/Accounts/AC4fcdc109b882daeeb43a656a4383fb32/Flows/FW1ad5ffa0d839fd208908eb61d3bf7f88"
+      },
+      "transitions": [
+        {
+          "event": "incomingMessage",
+          "conditions": [],
+          "next": "FF3b6e431776b1a44d13c04b11a0ca6a03",
+          "uuid": "2574e0e0-2683-4fe2-a3b5-58379a35efbd"
+        },
+        {
+          "event": "incomingCall",
+          "conditions": [],
+          "next": null,
+          "uuid": "c0fee626-4202-44c3-bee2-eff3862d66c1"
+        },
+        {
+          "event": "incomingRequest",
+          "conditions": [],
+          "next": "FF3b6e431776b1a44d13c04b11a0ca6a03",
+          "uuid": "4ac7dfa4-24c9-43b3-9c8f-1807f8326e7e"
+        }
+      ],
+      "sid": "FF7f1c873755ed856754207ba398aa71cd"
+    },
+    {
+      "name": "send_message_1",
+      "type": "Message",
+      "properties": {
+        "offset": {
+          "x": -340,
+          "y": 150
+        },
+        "body": "Seems like you do not want to order. See you tomorrow.",
+        "from": "{{flow.channel.address}}",
+        "to": "{{contact.channel.address}}",
+        "media_url": null,
+        "service": "{{trigger.message.InstanceSid}}",
+        "channel": "{{trigger.message.ChannelSid}}",
+        "attributes": null
+      },
+      "transitions": [
+        {
+          "event": "sent",
+          "conditions": [],
+          "next": null,
+          "uuid": "29b9f685-3e0e-4367-9cb7-ec9bd3cdd364"
+        },
+        {
+          "event": "failed",
+          "conditions": [],
+          "next": null,
+          "uuid": "35a43a05-07cc-4b68-b92d-03e925756cef"
+        }
+      ],
+      "sid": "FFa9a8609e27b29cb6f0bf893b09caa51e"
+    },
+    {
+      "name": "FlowChoose",
+      "type": "Branch",
+      "properties": {
+        "offset": {
+          "x": 360,
+          "y": -160
+        },
+        "input": "{{trigger.message.Body}}"
+      },
+      "transitions": [
+        {
+          "event": "noMatch",
+          "conditions": [],
+          "next": "FFc2b342ed6ee06133bd8528c82fb85519",
+          "uuid": "c24c4a26-b205-4d8f-ba5d-adfd1069ad35"
+        },
+        {
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "If value matches_any_of Let me join group",
+              "type": "contains",
+              "arguments": [
+                "{{trigger.message.Body}}"
+              ],
+              "value": "Let"
+            }
+          ],
+          "next": "FFda8810d603c2a024e09962435c6407ce",
+          "uuid": "11ae7992-20dc-43c5-a355-3553bc9846d7"
+        }
+      ],
+      "sid": "FF3b6e431776b1a44d13c04b11a0ca6a03"
+    },
+    {
+      "name": "Participantflow",
+      "type": "Message",
+      "properties": {
+        "offset": {
+          "x": 500,
+          "y": 110
+        },
+        "body": "Hey there welcome to group Berlin",
+        "from": "{{flow.channel.address}}",
+        "to": "{{contact.channel.address}}",
+        "media_url": null,
+        "service": "{{trigger.message.InstanceSid}}",
+        "channel": "{{trigger.message.ChannelSid}}",
+        "attributes": null
+      },
+      "transitions": [
+        {
+          "event": "sent",
+          "conditions": [],
+          "next": "FF07a1012bd1457b59fd4b45d36e8b5e8c",
+          "uuid": "dfad6ec0-860c-4886-a230-c281881ec94a"
+        },
+        {
+          "event": "failed",
+          "conditions": [],
+          "next": null,
+          "uuid": "ee5921ad-7c09-4f50-ae16-a054aad4ecb9"
+        }
+      ],
+      "sid": "FFda8810d603c2a024e09962435c6407ce"
+    },
+    {
+      "name": "send_message_2",
+      "type": "Message",
+      "properties": {
+        "offset": {
+          "x": 10,
+          "y": 150
+        },
+        "body": "Hey there welcome to WhatsFood. Great lets get food for your group.\n\nPlease forward the link to everyone joining:\nhttps://wa.me/14155238886?text=Let%20me%20join%20group%20Berlin",
+        "from": "{{flow.channel.address}}",
+        "to": "{{contact.channel.address}}",
+        "media_url": null,
+        "service": "{{trigger.message.InstanceSid}}",
+        "channel": "{{trigger.message.ChannelSid}}",
+        "attributes": null
+      },
+      "transitions": [
+        {
+          "event": "sent",
+          "conditions": [],
+          "next": "FF0b763916ce895e271224fee8d922e0a8",
+          "uuid": "9dbed951-4587-462c-98c3-aaf100227c01"
+        },
+        {
+          "event": "failed",
+          "conditions": [],
+          "next": null,
+          "uuid": "4ed575bb-93a2-4a95-8506-330ccc63a047"
+        }
+      ],
+      "sid": "FF62d3958a51e4b70fd0335ef8a2f4e2b5"
+    },
+    {
+      "name": "send_and_reply_2",
+      "type": "MessagePrompt",
+      "properties": {
+        "offset": {
+          "x": -50,
+          "y": 390
+        },
+        "body": "Great! Where would you like to order from?",
+        "from": "{{flow.channel.address}}",
+        "timeout": 1800,
+        "save_response_as": null,
+        "media_url": null,
+        "service": "{{trigger.message.InstanceSid}}",
+        "channel": "{{trigger.message.ChannelSid}}",
+        "attributes": null
+      },
+      "transitions": [
+        {
+          "event": "incomingMessage",
+          "conditions": [],
+          "next": "FF4eb22b17865f0ba4383deec700893655",
+          "uuid": "39fd48b6-c2ef-4e83-8423-022bb1f99df5"
+        },
+        {
+          "event": "timeout",
+          "conditions": [],
+          "next": "FFa9a8609e27b29cb6f0bf893b09caa51e",
+          "uuid": "5b672bf6-e86b-471f-a051-f4ee771325de"
+        },
+        {
+          "event": "deliveryFailure",
+          "conditions": [],
+          "next": null,
+          "uuid": "8b94f622-22cd-4649-9392-596d1221c096"
+        }
+      ],
+      "sid": "FF0b763916ce895e271224fee8d922e0a8"
+    },
+    {
+      "name": "restonameorg",
+      "type": "SetVariables",
+      "properties": {
+        "offset": {
+          "x": 10,
+          "y": 640
+        },
+        "variables": [
+          {
+            "key": "Restoname",
+            "value": "{{widgets.send_and_reply_2.inbound.Body}}",
+            "index": "0"
+          }
+        ]
+      },
+      "transitions": [
+        {
+          "event": "next",
+          "conditions": [],
+          "next": "FFc14a2b073ea473455fee2617c1d82728",
+          "uuid": "57f6ed5c-28fb-4a4f-bdf6-2ea750886630"
+        }
+      ],
+      "sid": "FF4eb22b17865f0ba4383deec700893655"
+    },
+    {
+      "name": "Copy_of_send_and_reply_2",
+      "type": "MessagePrompt",
+      "properties": {
+        "offset": {
+          "x": 520,
+          "y": 370
+        },
+        "body": "Great! What would you like to order from {{widgets.restonameorg.Variables}} Dominos",
+        "from": "{{flow.channel.address}}",
+        "timeout": 1800,
+        "save_response_as": null,
+        "media_url": null,
+        "service": "{{trigger.message.InstanceSid}}",
+        "channel": "{{trigger.message.ChannelSid}}",
+        "attributes": null
+      },
+      "transitions": [
+        {
+          "event": "incomingMessage",
+          "conditions": [],
+          "next": "FFb84231670390eaadff12712fb40c4e60",
+          "uuid": "82753af6-f2a4-4e14-8e4b-1abd8bfde187"
+        },
+        {
+          "event": "timeout",
+          "conditions": [],
+          "next": "FFa9a8609e27b29cb6f0bf893b09caa51e",
+          "uuid": "edf49a2b-f55e-4f84-bf84-32aa47305ea3"
+        },
+        {
+          "event": "deliveryFailure",
+          "conditions": [],
+          "next": null,
+          "uuid": "af1b9989-74bc-4801-ba42-c31393060041"
+        }
+      ],
+      "sid": "FF07a1012bd1457b59fd4b45d36e8b5e8c"
+    },
+    {
+      "name": "send_and_reply_3",
+      "type": "MessagePrompt",
+      "properties": {
+        "offset": {
+          "x": 20,
+          "y": 870
+        },
+        "body": "Great choice! You have chosen {{widgets.restonameorg.Variables.Restoname}}  Dominos\n\nWhat would you like to order?",
+        "from": "{{flow.channel.address}}",
+        "timeout": 1800,
+        "save_response_as": null,
+        "media_url": null,
+        "service": "{{trigger.message.InstanceSid}}",
+        "channel": "{{trigger.message.ChannelSid}}",
+        "attributes": null
+      },
+      "transitions": [
+        {
+          "event": "incomingMessage",
+          "conditions": [],
+          "next": "FF632de744a78dd5e0a930dfb25d607836",
+          "uuid": "9bc657ed-3ac7-4ef1-ba8e-0a75e5a1a1de"
+        },
+        {
+          "event": "timeout",
+          "conditions": [],
+          "next": "FFa9a8609e27b29cb6f0bf893b09caa51e",
+          "uuid": "d94cf705-8259-4385-87e8-743c0d9b1171"
+        },
+        {
+          "event": "deliveryFailure",
+          "conditions": [],
+          "next": null,
+          "uuid": "6808fdc1-45c2-458b-acd8-8c73be102de1"
+        }
+      ],
+      "sid": "FFc14a2b073ea473455fee2617c1d82728"
+    },
+    {
+      "name": "orgorder",
+      "type": "SetVariables",
+      "properties": {
+        "offset": {
+          "x": 30,
+          "y": 1150
+        },
+        "variables": [
+          {
+            "key": "orgorder",
+            "value": "{{widgets.send_and_reply_3.inbound.Body}}"
+          }
+        ]
+      },
+      "transitions": [
+        {
+          "event": "next",
+          "conditions": [],
+          "next": "FF57cc5d4853f485cb8faf74214ddc7438",
+          "uuid": "b6011c60-ab3d-47f2-9df4-f845374b4550"
+        }
+      ],
+      "sid": "FF632de744a78dd5e0a930dfb25d607836"
+    },
+    {
+      "name": "send_message_5",
+      "type": "Message",
+      "properties": {
+        "offset": {
+          "x": 30,
+          "y": 1380
+        },
+        "body": "Great you have ordered {{widgets.orgorder.Variables}}  Chicken Pizza from {{widgets.restonameorg.Variables}} Dominos",
+        "from": "{{flow.channel.address}}",
+        "to": "{{contact.channel.address}}",
+        "media_url": null,
+        "service": "{{trigger.message.InstanceSid}}",
+        "channel": "{{trigger.message.ChannelSid}}",
+        "attributes": null
+      },
+      "transitions": [
+        {
+          "event": "sent",
+          "conditions": [],
+          "next": "FF2a1adf464cec8e7f5e82dd48ef674d36",
+          "uuid": "90993589-1fe5-457f-a658-8cb19def8bdc"
+        },
+        {
+          "event": "failed",
+          "conditions": [],
+          "next": null,
+          "uuid": "633d25c9-ba9c-452e-8d79-f4e91254758c"
+        }
+      ],
+      "sid": "FF57cc5d4853f485cb8faf74214ddc7438"
+    },
+    {
+      "name": "b1",
+      "type": "SetVariables",
+      "properties": {
+        "offset": {
+          "x": 530,
+          "y": 870
+        },
+        "variables": [
+          {
+            "key": "b1",
+            "value": "{{widgets.send_and_reply_3.inbound.Body}}",
+            "index": "0"
+          }
+        ]
+      },
+      "transitions": [
+        {
+          "event": "next",
+          "conditions": [],
+          "next": "FFe445a408305bf84d9be3369addcaad74",
+          "uuid": "f47ad14f-c38f-4f45-875f-4a01c1dd83d1"
+        }
+      ],
+      "sid": "FFb84231670390eaadff12712fb40c4e60"
+    },
+    {
+      "name": "Copy_of_send_message_5",
+      "type": "Message",
+      "properties": {
+        "offset": {
+          "x": 530,
+          "y": 1120
+        },
+        "body": "Great you have ordered {{widgets.b1.Variables}}2 X Cheese Pizza  from {{widgets.restonameorg.Variables}} Dominos",
+        "from": "{{flow.channel.address}}",
+        "to": "{{contact.channel.address}}",
+        "media_url": null,
+        "service": "{{trigger.message.InstanceSid}}",
+        "channel": "{{trigger.message.ChannelSid}}",
+        "attributes": null
+      },
+      "transitions": [
+        {
+          "event": "sent",
+          "conditions": [],
+          "next": "FF2a1adf464cec8e7f5e82dd48ef674d36",
+          "uuid": "9f554599-153d-45fa-8fce-cbea2c0b01ce"
+        },
+        {
+          "event": "failed",
+          "conditions": [],
+          "next": null,
+          "uuid": "1a28891b-0b3c-488a-af12-82db16476086"
+        }
+      ],
+      "sid": "FFe445a408305bf84d9be3369addcaad74"
+    },
+    {
+      "name": "TotalOrder",
+      "type": "SetVariables",
+      "properties": {
+        "offset": {
+          "x": 540,
+          "y": 1420
+        },
+        "variables": [
+          {
+            "key": "count",
+            "value": "{{widgets.b1.Variables}} \n{{widgets.orgorder.Variables}}"
+          }
+        ]
+      },
+      "transitions": [
+        {
+          "event": "next",
+          "conditions": [],
+          "next": "FFdd388f55dc73572873e563b03edebe8e",
+          "uuid": "fed2f6c7-9b1f-4430-a4da-fe573373557d"
+        }
+      ],
+      "sid": "FF2a1adf464cec8e7f5e82dd48ef674d36"
+    },
+    {
+      "name": "orgnumber",
+      "type": "SetVariables",
+      "properties": {
+        "offset": {
+          "x": -70,
+          "y": -140
+        },
+        "variables": [
+          {
+            "key": "orgnumber",
+            "value": "{{trigger.message.From}}",
+            "index": "0"
+          }
+        ]
+      },
+      "transitions": [
+        {
+          "event": "next",
+          "conditions": [],
+          "next": "FF62d3958a51e4b70fd0335ef8a2f4e2b5",
+          "uuid": "d55ac668-0ea8-4764-8945-25cc656b1a1d"
+        }
+      ],
+      "sid": "FFc2b342ed6ee06133bd8528c82fb85519"
+    },
+    {
+      "name": "orderrfinal",
+      "type": "Message",
+      "properties": {
+        "offset": {
+          "x": 417,
+          "y": 1691
+        },
+        "body": "Hello your group has ordered the following. {{widgets.TotalOrder.Variables}}\n1xChicken Pizza\n1xCheese Pizza",
+        "from": "{{flow.channel.address}}",
+        "to": "{{contact.channel.address}}",
+        "media_url": null,
+        "service": "{{trigger.message.InstanceSid}}",
+        "channel": "{{trigger.message.ChannelSid}}",
+        "attributes": null
+      },
+      "transitions": [
+        {
+          "event": "sent",
+          "conditions": [],
+          "next": null,
+          "uuid": "cc56b5cd-c766-4274-af79-af13a21a3d6b"
+        },
+        {
+          "event": "failed",
+          "conditions": [],
+          "next": null,
+          "uuid": "f1b792e8-4982-42a8-be6d-9295c00d9d17"
+        }
+      ],
+      "sid": "FFdd388f55dc73572873e563b03edebe8e"
+    }
+  ]
+}
